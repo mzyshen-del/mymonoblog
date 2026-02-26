@@ -1,0 +1,8 @@
+name = "shenmu-supabase-proxy"
+main = "proxy-cloudflare-worker.js"
+compatibility_date = "2026-02-26"
+
+[vars]
+# Replace with your own Supabase project URL.
+SUPABASE_URL = "https://ndiyifgkqlzoodfarlxh.supabase.co"
+

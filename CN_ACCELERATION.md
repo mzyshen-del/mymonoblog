@@ -34,3 +34,6 @@ Keep these unchanged:
 ## Notes
 - Do not expose `service_role` key in frontend.
 - This proxy uses only publishable key + user token.
+
+## Quick Start (PowerShell)
+See `WORKER_DEPLOY_STEPS.md` for copy-paste commands.
