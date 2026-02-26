@@ -3,6 +3,7 @@ if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 
 const SUPABASE_URL = window.BLOG_SUPABASE_URL || "";
 const SUPABASE_KEY = window.BLOG_SUPABASE_ANON_KEY || "";
+const API_BASE = window.BLOG_API_BASE || SUPABASE_URL;
 const ADMIN_EMAIL = (window.BLOG_ADMIN_EMAIL || "").toLowerCase();
 
 const ACCESS_TOKEN_KEY = "blog_supabase_access_token";
@@ -72,9 +73,9 @@ function initPageTransitions() {
 
 function hasConfig() {
   return (
-    typeof SUPABASE_URL === "string" &&
+    typeof API_BASE === "string" &&
     typeof SUPABASE_KEY === "string" &&
-    SUPABASE_URL.startsWith("https://") &&
+    API_BASE.startsWith("https://") &&
     SUPABASE_KEY.length > 20
   );
 }
@@ -121,7 +122,7 @@ async function sbRequest(path, options = {}) {
   headers.Authorization = `Bearer ${token || SUPABASE_KEY}`;
   if (prefer) headers.Prefer = prefer;
 
-  const resp = await fetch(`${SUPABASE_URL}${path}`, {
+  const resp = await fetch(`${API_BASE}${path}`, {
     method,
     headers,
     body: body ? JSON.stringify(body) : undefined,
