@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Mono Blog | Guestbook</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="index.html">MY BLOG</a>
+      <nav class="side-nav">
+        <a href="index.html">Front Page</a>
+        <a href="diary.html">Diary</a>
+        <a class="active" href="guestbook.html">Guestbook</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <section class="panel">
+        <div class="panel-head">
+          <p class="tag">Guestbook</p>
+          <h2>留言板</h2>
+        </div>
+        <form class="guest-form" id="guest-form">
+          <label for="guest-message">留言</label>
+          <textarea id="guest-message" name="message" rows="4" placeholder="写点什么..." required></textarea>
+          <button type="submit" class="btn primary">提交留言</button>
+          <p class="hint" id="guestbook-status">任何人都可以留言。</p>
+        </form>
+        <ul class="messages" id="message-list"></ul>
+      </section>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> My Mono Blog</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    if (!window.supabase) {
+      document.write('<script src="https://unpkg.com/@supabase/supabase-js@2"><\\/script>');
+    }
+  </script>
+  <script src="supabase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

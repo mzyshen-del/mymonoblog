@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Mono Blog | Front Page</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="index.html">MY BLOG</a>
+      <nav class="side-nav">
+        <a class="active" href="index.html">Front Page</a>
+        <a href="diary.html">Diary</a>
+        <a href="guestbook.html">Guestbook</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <section class="panel hero">
+        <p class="tag">Front Page</p>
+        <h1>Welcome to my blog!</h1>
+        <p class="intro">(՞_   ̫ _՞)ᐝ</p>
+
+        <div class="emoji-list" aria-label="emoji list">
+          <p>ᜊ•͈⌔•͈ᜊ</p>
+          <p>⌯&gt;₃&lt;⌯ಣ</p>
+          <p>=ᗜωᗜ=</p>
+          <p>ᜊ꒰๑˃͈꒵˂͈๑꒱ᜊ</p>
+          <p>՞˶･֊･˶՞</p>
+          <p>⬮ω⬮</p>
+          <p>ᶻz ₍^_   ̫ _^₎</p>
+          <p>՞⸝⸝'ᜊ'⸝⸝՞</p>
+          <p>๑'ꇴ'๑</p>
+          <p>◍⁰ᯅ⁰◍ .ᐟ.ᐟ</p>
+          <p>⦁֊⦁꧞</p>
+          <p>ฅ/ᐠ .⸝⸝⸝. ྀིﾏฅ</p>
+          <p>꒦ິᯅ꒦ີ</p>
+          <p>⌯ꈍꈊꈍ⌯ಣ</p>
+          <p>Ꮚ ֊ .̫ ֊ Ꮚ ᐝ</p>
+          <p>₍˄.͡˳̫.˄₎ฅ˒˒</p>
+          <p>ꉂ ･ ･ ☆</p>
+          <p>⌯'ᵕ'⌯</p>
+          <p>ʢᴗ.ᴗʡᶻ</p>
+          <p>૮ ˃̵ ֊ ˂̵  ა</p>
+          <p>ʚ˃ ᵕ ˂ ɞ</p>
+          <p>˶ᵒ ᵕ ˂˶</p>
+          <p>◍˃ᵕ˂◍</p>
+          <p>˃̶͈ ꇴ ˂̶͈</p>
+          <p>･֊･</p>
+          <p>꒦ິ^꒦ິ</p>
+          <p>ʢ˶ᵒ ᵕ ˂˶ʡᶻ</p>
+          <p>ᗜ ˰ ᗜ</p>
+          <p>⑉･ᴗ･⑉</p>
+          <p>^&gt;៸៸៸៸&lt;^</p>
+          <p>ʚ•͈ᴗ•͈ɞ</p>
+          <p>(ง ˙o˙)ว</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> My Mono Blog</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    if (!window.supabase) {
+      document.write('<script src="https://unpkg.com/@supabase/supabase-js@2"><\\/script>');
+    }
+  </script>
+  <script src="supabase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

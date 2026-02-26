@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Mono Blog | Diary</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="index.html">MY BLOG</a>
+      <nav class="side-nav">
+        <a href="index.html">Front Page</a>
+        <a class="active" href="diary.html">Diary</a>
+        <a href="guestbook.html">Guestbook</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <section class="panel">
+        <div class="panel-head">
+          <p class="tag">Diary</p>
+          <h2>日记</h2>
+        </div>
+        <p class="subline">记录一些心情和想法</p>
+
+        <div class="auth-box" id="admin-auth-box">
+          <h3>管理员入口</h3>
+          <form id="admin-login-form" class="guest-form">
+            <label for="admin-email">邮箱</label>
+            <input id="admin-email" type="email" placeholder="admin@example.com" required />
+            <label for="admin-password">密码</label>
+            <input id="admin-password" type="password" placeholder="输入管理员密码" required />
+            <div class="diary-actions">
+              <button class="btn primary" type="submit">登录编辑日记</button>
+              <button class="btn" id="admin-logout-btn" type="button">退出登录</button>
+            </div>
+          </form>
+          <p class="hint" id="admin-auth-status">未登录时只可查看日记。</p>
+        </div>
+
+        <form id="diary-form" class="diary-form hidden">
+          <input id="diary-edit-id" type="hidden" />
+          <label for="diary-title">标题</label>
+          <input id="diary-title" type="text" placeholder="例如：今天的记录" required />
+          <label for="diary-content">内容</label>
+          <textarea id="diary-content" rows="6" placeholder="写下你的心情和想法..." required></textarea>
+          <div class="diary-actions">
+            <button type="submit" class="btn primary" id="diary-save-btn">保存日记</button>
+            <button type="button" class="btn" id="diary-cancel-btn">取消编辑</button>
+          </div>
+          <p class="hint" id="diary-status">你已登录，可新增、编辑、删除日记。</p>
+        </form>
+
+        <div id="diary-list" class="diary-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> My Mono Blog</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    if (!window.supabase) {
+      document.write('<script src="https://unpkg.com/@supabase/supabase-js@2"><\\/script>');
+    }
+  </script>
+  <script src="supabase-config.js"></script>
+  <script src="script.js?v=20260225c"></script>
+</body>
+</html>
