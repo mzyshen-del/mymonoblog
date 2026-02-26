@@ -45,6 +45,28 @@ function initEmojiInteraction() {
       void item.offsetWidth;
       item.classList.add("pop");
     });
+    item.addEventListener("animationend", () => {
+      if (item.classList.contains("pop")) {
+        item.classList.remove("pop");
+      }
+    });
+  });
+}
+
+function initPageTransitions() {
+  const links = document.querySelectorAll('a[href$=".html"]');
+  links.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const href = link.getAttribute("href");
+      if (!href || href.startsWith("#")) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (link.target === "_blank") return;
+      e.preventDefault();
+      document.body.classList.add("is-leaving");
+      setTimeout(() => {
+        window.location.href = href;
+      }, 220);
+    });
   });
 }
 
@@ -182,6 +204,7 @@ initGuestbook();
 initDiary();
 initSidebarToggle();
 initEmojiInteraction();
+initPageTransitions();
 
 async function initGuestbook() {
   const guestForm = document.getElementById("guest-form");

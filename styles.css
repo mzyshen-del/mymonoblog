@@ -25,6 +25,14 @@ body {
     linear-gradient(155deg, var(--sky) 0%, var(--sky-2) 40%, var(--cream) 100%);
 }
 
+body {
+  animation: pageFadeIn 0.45s ease both;
+}
+
+body.is-leaving {
+  animation: pageFadeOut 0.26s ease both;
+}
+
 .noise {
   position: fixed;
   inset: 0;
@@ -134,6 +142,20 @@ body {
   background: linear-gradient(160deg, #fffefa 0%, #f8f0e5 100%);
   padding: 1.5rem;
   box-shadow: 0 20px 38px rgba(84, 104, 128, 0.18);
+  position: relative;
+  overflow: hidden;
+}
+
+.panel::after {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  top: -120px;
+  right: -110px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(191, 223, 248, 0.62) 0%, rgba(191, 223, 248, 0) 70%);
+  pointer-events: none;
 }
 
 .hero { padding: 1.9rem; }
@@ -183,6 +205,7 @@ h2 { font-size: 1.8rem; margin-bottom: 0; }
   user-select: none;
   transform-origin: center;
   transition: transform 0.16s ease;
+  animation: floaty 4.2s ease-in-out infinite;
 }
 
 .emoji-bubble:hover {
@@ -192,6 +215,10 @@ h2 { font-size: 1.8rem; margin-bottom: 0; }
 .emoji-bubble.pop {
   animation: popSpin 0.42s ease;
 }
+
+.emoji-row .emoji-bubble:nth-child(3n + 1) { animation-delay: 0s; }
+.emoji-row .emoji-bubble:nth-child(3n + 2) { animation-delay: 0.8s; }
+.emoji-row .emoji-bubble:nth-child(3n + 3) { animation-delay: 1.4s; }
 
 .btn {
   display: inline-block;
@@ -306,6 +333,21 @@ textarea:focus {
   35% { transform: translateY(-8px) scale(1.22) rotate(-6deg); }
   65% { transform: translateY(3px) scale(0.96) rotate(4deg); }
   100% { transform: translateY(0) scale(1) rotate(0deg); }
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(-2deg); }
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pageFadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(8px); }
 }
 
 @media (max-width: 920px) {
