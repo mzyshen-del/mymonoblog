@@ -6,6 +6,8 @@ const SUPABASE_KEY = window.BLOG_SUPABASE_ANON_KEY || "";
 const API_BASE = window.BLOG_API_BASE || SUPABASE_URL;
 const ADMIN_EMAIL = (window.BLOG_ADMIN_EMAIL || "").toLowerCase();
 let runtimeApiBase = API_BASE;
+const DIARY_CACHE_KEY = "blog_diary_cache";
+const GUESTBOOK_CACHE_KEY = "blog_guestbook_cache";
 
 const ACCESS_TOKEN_KEY = "blog_supabase_access_token";
 const USER_EMAIL_KEY = "blog_supabase_user_email";
@@ -131,47 +133,46 @@ async function sbRequest(path, options = {}) {
     });
   }
 
-  let resp;
-  try {
-    resp = await doFetch(runtimeApiBase);
-  } catch (networkErr) {
-    if (runtimeApiBase !== SUPABASE_URL) {
-      runtimeApiBase = SUPABASE_URL;
-      resp = await doFetch(runtimeApiBase);
-    } else {
-      throw networkErr;
-    }
-  }
+  const candidates = [runtimeApiBase];
+  const altBase = runtimeApiBase === API_BASE ? SUPABASE_URL : API_BASE;
+  if (altBase && !candidates.includes(altBase)) candidates.push(altBase);
 
-  if (!resp.ok) {
-    if (runtimeApiBase !== SUPABASE_URL && resp.status >= 500) {
-      runtimeApiBase = SUPABASE_URL;
-      const retryResp = await doFetch(runtimeApiBase);
-      if (retryResp.ok) {
-        const retryCt = retryResp.headers.get("content-type") || "";
-        if (retryCt.includes("application/json")) return retryResp.json();
-        return null;
-      }
-    }
-
-    let message = `HTTP ${resp.status}`;
+  let lastErr = null;
+  for (const base of candidates) {
     try {
-      const err = await resp.json();
-      message = err.msg || err.message || err.error_description || err.error || message;
-    } catch {
-      try {
-        const text = await resp.text();
-        if (text) message = text;
-      } catch {}
+      const resp = await doFetch(base);
+
+      // Transient server/proxy errors: try the alternate base.
+      if (resp.status >= 500) {
+        lastErr = new Error(`HTTP ${resp.status}`);
+        continue;
+      }
+
+      if (!resp.ok) {
+        let message = `HTTP ${resp.status}`;
+        try {
+          const err = await resp.json();
+          message = err.msg || err.message || err.error_description || err.error || message;
+        } catch {
+          try {
+            const text = await resp.text();
+            if (text) message = text;
+          } catch {}
+        }
+        throw new Error(message);
+      }
+
+      runtimeApiBase = base;
+      const ct = resp.headers.get("content-type") || "";
+      if (ct.includes("application/json")) return resp.json();
+      return null;
+    } catch (err) {
+      lastErr = err;
+      continue;
     }
-    throw new Error(message);
   }
 
-  const ct = resp.headers.get("content-type") || "";
-  if (ct.includes("application/json")) {
-    return resp.json();
-  }
-  return null;
+  throw lastErr || new Error("request failed");
 }
 
 async function apiLogin(email, password) {
@@ -247,6 +248,7 @@ async function initGuestbook() {
     messageList.innerHTML = "";
     try {
       const data = await apiLoadGuestbook();
+      localStorage.setItem(GUESTBOOK_CACHE_KEY, JSON.stringify(data || []));
       if (!data || !data.length) {
         const li = document.createElement("li");
         li.textContent = "还没有留言，来写第一条吧。";
@@ -266,10 +268,27 @@ async function initGuestbook() {
         messageList.appendChild(li);
       });
     } catch (e) {
-      const li = document.createElement("li");
-      li.textContent = "留言加载失败。";
-      messageList.appendChild(li);
-      if (statusEl) statusEl.textContent = `留言加载失败：${e.message}`;
+      const cache = localStorage.getItem(GUESTBOOK_CACHE_KEY);
+      const cached = cache ? JSON.parse(cache) : [];
+      if (cached.length) {
+        cached.forEach((row) => {
+          const li = document.createElement("li");
+          const p1 = document.createElement("p");
+          p1.textContent = row.content;
+          const p2 = document.createElement("p");
+          p2.className = "diary-meta";
+          p2.textContent = formatTime(row.created_at);
+          li.appendChild(p1);
+          li.appendChild(p2);
+          messageList.appendChild(li);
+        });
+        if (statusEl) statusEl.textContent = "网络不稳定，已显示缓存留言。";
+      } else {
+        const li = document.createElement("li");
+        li.textContent = "留言加载失败。";
+        messageList.appendChild(li);
+        if (statusEl) statusEl.textContent = `留言加载失败：${e.message}`;
+      }
     }
   }
 
@@ -388,10 +407,18 @@ async function initDiary() {
   async function loadEntries() {
     try {
       const data = await apiLoadDiary();
+      localStorage.setItem(DIARY_CACHE_KEY, JSON.stringify(data || []));
       renderEntries(data || []);
     } catch (e) {
-      renderEntries([]);
-      if (authStatus) authStatus.textContent = `日记加载失败：${e.message}`;
+      const cache = localStorage.getItem(DIARY_CACHE_KEY);
+      const cached = cache ? JSON.parse(cache) : [];
+      if (cached.length) {
+        renderEntries(cached);
+        if (authStatus) authStatus.textContent = "网络不稳定，已显示缓存日记。";
+      } else {
+        renderEntries([]);
+        if (authStatus) authStatus.textContent = `日记加载失败：${e.message}`;
+      }
     }
   }
 
