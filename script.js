@@ -37,6 +37,17 @@ function initSidebarToggle() {
   });
 }
 
+function initEmojiInteraction() {
+  const emojis = document.querySelectorAll(".emoji-bubble");
+  emojis.forEach((item) => {
+    item.addEventListener("click", () => {
+      item.classList.remove("pop");
+      void item.offsetWidth;
+      item.classList.add("pop");
+    });
+  });
+}
+
 function hasConfig() {
   return (
     typeof SUPABASE_URL === "string" &&
@@ -170,6 +181,7 @@ async function apiInsertGuestbook(content) {
 initGuestbook();
 initDiary();
 initSidebarToggle();
+initEmojiInteraction();
 
 async function initGuestbook() {
   const guestForm = document.getElementById("guest-form");

@@ -18,7 +18,7 @@ body {
   padding: 0;
   min-height: 100%;
   color: var(--text);
-  font-family: "Segoe UI Variable Text", "Segoe UI", "Segoe UI Symbol", Tahoma, sans-serif;
+  font-family: "M PLUS Rounded 1c", "Nunito", "Segoe UI", sans-serif;
   background:
     radial-gradient(1000px 520px at -5% -10%, #e9f4ff 0%, transparent 58%),
     radial-gradient(960px 560px at 105% 8%, #f8f2e8 0%, transparent 56%),
@@ -165,30 +165,33 @@ h2 { font-size: 1.8rem; margin-bottom: 0; }
 
 .emoji-stage {
   margin-top: 1.2rem;
-  min-height: 320px;
-  border: 1px dashed #c2d3e4;
-  border-radius: 16px;
-  padding: 1rem;
-  position: relative;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.45);
+  padding: 0.25rem 0;
 }
 
-.emoji-float {
-  position: absolute;
+.emoji-row {
+  margin: 0 0 0.18rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.emoji-bubble {
   display: inline-block;
   color: #243447;
-  animation: drift 7s ease-in-out infinite;
+  cursor: pointer;
+  user-select: none;
+  transform-origin: center;
+  transition: transform 0.16s ease;
 }
 
-.f1 { top: 8%; left: 8%; animation-delay: 0s; }
-.f2 { top: 20%; left: 54%; animation-delay: 0.7s; }
-.f3 { top: 34%; left: 22%; animation-delay: 1.2s; }
-.f4 { top: 40%; left: 70%; animation-delay: 0.4s; }
-.f5 { top: 56%; left: 12%; animation-delay: 1.6s; }
-.f6 { top: 65%; left: 50%; animation-delay: 0.9s; }
-.f7 { top: 77%; left: 28%; animation-delay: 1.9s; }
-.f8 { top: 80%; left: 72%; animation-delay: 0.2s; }
+.emoji-bubble:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.emoji-bubble.pop {
+  animation: popSpin 0.42s ease;
+}
 
 .btn {
   display: inline-block;
@@ -296,6 +299,13 @@ textarea:focus {
   25% { transform: translateY(-8px) translateX(4px) rotate(-2deg); }
   50% { transform: translateY(2px) translateX(-6px) rotate(2deg); }
   75% { transform: translateY(-5px) translateX(2px) rotate(-1deg); }
+}
+
+@keyframes popSpin {
+  0% { transform: translateY(0) scale(1) rotate(0deg); }
+  35% { transform: translateY(-8px) scale(1.22) rotate(-6deg); }
+  65% { transform: translateY(3px) scale(0.96) rotate(4deg); }
+  100% { transform: translateY(0) scale(1) rotate(0deg); }
 }
 
 @media (max-width: 920px) {
