@@ -8,6 +8,35 @@ const ADMIN_EMAIL = (window.BLOG_ADMIN_EMAIL || "").toLowerCase();
 const ACCESS_TOKEN_KEY = "blog_supabase_access_token";
 const USER_EMAIL_KEY = "blog_supabase_user_email";
 
+function initSidebarToggle() {
+  const sidebars = document.querySelectorAll(".sidebar");
+  sidebars.forEach((sidebar) => {
+    const toggle = sidebar.querySelector(".sidebar-toggle");
+    const nav = sidebar.querySelector(".side-nav");
+    if (!toggle || !nav) return;
+
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = sidebar.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", String(open));
+    });
+
+    nav.addEventListener("click", () => {
+      sidebar.classList.remove("open");
+      toggle.setAttribute("aria-expanded", "false");
+    });
+
+    document.addEventListener("click", (e) => {
+      const target = e.target;
+      if (!(target instanceof Node)) return;
+      if (!sidebar.contains(target)) {
+        sidebar.classList.remove("open");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  });
+}
+
 function hasConfig() {
   return (
     typeof SUPABASE_URL === "string" &&
@@ -140,6 +169,7 @@ async function apiInsertGuestbook(content) {
 
 initGuestbook();
 initDiary();
+initSidebarToggle();
 
 async function initGuestbook() {
   const guestForm = document.getElementById("guest-form");

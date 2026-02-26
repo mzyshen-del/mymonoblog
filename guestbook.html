@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Mono Blog | Guestbook</title>
+  <title>Shenmu's Blog | Guestbook</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -11,8 +11,13 @@
 
   <div class="layout">
     <aside class="sidebar">
-      <a class="brand" href="index.html">MY BLOG</a>
-      <nav class="side-nav">
+      <div class="sidebar-top">
+        <a class="brand" href="index.html">Shenmu's Blog</a>
+        <button class="sidebar-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <nav id="site-nav" class="side-nav">
         <a href="index.html">Front Page</a>
         <a href="diary.html">Diary</a>
         <a class="active" href="guestbook.html">Guestbook</a>
@@ -37,10 +42,10 @@
   </div>
 
   <footer class="site-footer">
-    <p>© <span id="year"></span> My Mono Blog</p>
+    <p>© <span id="year"></span> Shenmu's Blog</p>
   </footer>
 
   <script src="supabase-config.js"></script>
-  <script src="script.js?v=20260226a"></script>
+  <script src="script.js?v=20260226b"></script>
 </body>
 </html>

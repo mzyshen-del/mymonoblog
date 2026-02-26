@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Mono Blog | Diary</title>
+  <title>Shenmu's Blog | Diary</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -11,8 +11,13 @@
 
   <div class="layout">
     <aside class="sidebar">
-      <a class="brand" href="index.html">MY BLOG</a>
-      <nav class="side-nav">
+      <div class="sidebar-top">
+        <a class="brand" href="index.html">Shenmu's Blog</a>
+        <button class="sidebar-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <nav id="site-nav" class="side-nav">
         <a href="index.html">Front Page</a>
         <a class="active" href="diary.html">Diary</a>
         <a href="guestbook.html">Guestbook</a>
@@ -26,6 +31,8 @@
           <h2>日记</h2>
         </div>
         <p class="subline">记录一些心情和想法</p>
+
+        <div id="diary-list" class="diary-list"></div>
 
         <div class="auth-box" id="admin-auth-box">
           <h3>管理员入口</h3>
@@ -54,17 +61,15 @@
           </div>
           <p class="hint" id="diary-status">你已登录，可新增、编辑、删除日记。</p>
         </form>
-
-        <div id="diary-list" class="diary-list"></div>
       </section>
     </main>
   </div>
 
   <footer class="site-footer">
-    <p>© <span id="year"></span> My Mono Blog</p>
+    <p>© <span id="year"></span> Shenmu's Blog</p>
   </footer>
 
   <script src="supabase-config.js"></script>
-  <script src="script.js?v=20260226a"></script>
+  <script src="script.js?v=20260226b"></script>
 </body>
 </html>

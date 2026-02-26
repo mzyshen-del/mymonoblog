@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Mono Blog | Front Page</title>
+  <title>Shenmu's Blog | Front Page</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -11,8 +11,13 @@
 
   <div class="layout">
     <aside class="sidebar">
-      <a class="brand" href="index.html">MY BLOG</a>
-      <nav class="side-nav">
+      <div class="sidebar-top">
+        <a class="brand" href="index.html">Shenmu's Blog</a>
+        <button class="sidebar-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <nav id="site-nav" class="side-nav">
         <a class="active" href="index.html">Front Page</a>
         <a href="diary.html">Diary</a>
         <a href="guestbook.html">Guestbook</a>
@@ -25,49 +30,25 @@
         <h1>Welcome to my blog!</h1>
         <p class="intro">(՞_   ̫ _՞)ᐝ</p>
 
-        <div class="emoji-list" aria-label="emoji list">
-          <p>ᜊ•͈⌔•͈ᜊ</p>
-          <p>⌯&gt;₃&lt;⌯ಣ</p>
-          <p>=ᗜωᗜ=</p>
-          <p>ᜊ꒰๑˃͈꒵˂͈๑꒱ᜊ</p>
-          <p>՞˶･֊･˶՞</p>
-          <p>⬮ω⬮</p>
-          <p>ᶻz ₍^_   ̫ _^₎</p>
-          <p>՞⸝⸝'ᜊ'⸝⸝՞</p>
-          <p>๑'ꇴ'๑</p>
-          <p>◍⁰ᯅ⁰◍ .ᐟ.ᐟ</p>
-          <p>⦁֊⦁꧞</p>
-          <p>ฅ/ᐠ .⸝⸝⸝. ྀིﾏฅ</p>
-          <p>꒦ິᯅ꒦ີ</p>
-          <p>⌯ꈍꈊꈍ⌯ಣ</p>
-          <p>Ꮚ ֊ .̫ ֊ Ꮚ ᐝ</p>
-          <p>₍˄.͡˳̫.˄₎ฅ˒˒</p>
-          <p>ꉂ ･ ･ ☆</p>
-          <p>⌯'ᵕ'⌯</p>
-          <p>ʢᴗ.ᴗʡᶻ</p>
-          <p>૮ ˃̵ ֊ ˂̵  ა</p>
-          <p>ʚ˃ ᵕ ˂ ɞ</p>
-          <p>˶ᵒ ᵕ ˂˶</p>
-          <p>◍˃ᵕ˂◍</p>
-          <p>˃̶͈ ꇴ ˂̶͈</p>
-          <p>･֊･</p>
-          <p>꒦ິ^꒦ິ</p>
-          <p>ʢ˶ᵒ ᵕ ˂˶ʡᶻ</p>
-          <p>ᗜ ˰ ᗜ</p>
-          <p>⑉･ᴗ･⑉</p>
-          <p>^&gt;៸៸៸៸&lt;^</p>
-          <p>ʚ•͈ᴗ•͈ɞ</p>
-          <p>(ง ˙o˙)ว</p>
+        <div class="emoji-stage" aria-label="animated emoji">
+          <span class="emoji-float f1">ᜊ•͈⌔•͈ᜊ</span>
+          <span class="emoji-float f2">⌯&gt;₃&lt;⌯ಣ</span>
+          <span class="emoji-float f3">ᜊ꒰๑˃͈꒵˂͈๑꒱ᜊ</span>
+          <span class="emoji-float f4">՞˶･֊･˶՞</span>
+          <span class="emoji-float f5">⊹ ʚ•͈ᴗ•͈ɞ ⊹</span>
+          <span class="emoji-float f6">ʢ˶ᵒ ᵕ ˂˶ʡᶻ</span>
+          <span class="emoji-float f7">^&gt;៸៸៸៸&lt;^</span>
+          <span class="emoji-float f8">◍˃ᵕ˂◍</span>
         </div>
       </section>
     </main>
   </div>
 
   <footer class="site-footer">
-    <p>© <span id="year"></span> My Mono Blog</p>
+    <p>© <span id="year"></span> Shenmu's Blog</p>
   </footer>
 
   <script src="supabase-config.js"></script>
-  <script src="script.js?v=20260226a"></script>
+  <script src="script.js?v=20260226b"></script>
 </body>
 </html>
