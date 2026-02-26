@@ -5,6 +5,7 @@ const SUPABASE_URL = window.BLOG_SUPABASE_URL || "";
 const SUPABASE_KEY = window.BLOG_SUPABASE_ANON_KEY || "";
 const API_BASE = window.BLOG_API_BASE || SUPABASE_URL;
 const ADMIN_EMAIL = (window.BLOG_ADMIN_EMAIL || "").toLowerCase();
+let runtimeApiBase = API_BASE;
 
 const ACCESS_TOKEN_KEY = "blog_supabase_access_token";
 const USER_EMAIL_KEY = "blog_supabase_user_email";
@@ -122,13 +123,37 @@ async function sbRequest(path, options = {}) {
   headers.Authorization = `Bearer ${token || SUPABASE_KEY}`;
   if (prefer) headers.Prefer = prefer;
 
-  const resp = await fetch(`${API_BASE}${path}`, {
-    method,
-    headers,
-    body: body ? JSON.stringify(body) : undefined,
-  });
+  async function doFetch(base) {
+    return fetch(`${base}${path}`, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined,
+    });
+  }
+
+  let resp;
+  try {
+    resp = await doFetch(runtimeApiBase);
+  } catch (networkErr) {
+    if (runtimeApiBase !== SUPABASE_URL) {
+      runtimeApiBase = SUPABASE_URL;
+      resp = await doFetch(runtimeApiBase);
+    } else {
+      throw networkErr;
+    }
+  }
 
   if (!resp.ok) {
+    if (runtimeApiBase !== SUPABASE_URL && resp.status >= 500) {
+      runtimeApiBase = SUPABASE_URL;
+      const retryResp = await doFetch(runtimeApiBase);
+      if (retryResp.ok) {
+        const retryCt = retryResp.headers.get("content-type") || "";
+        if (retryCt.includes("application/json")) return retryResp.json();
+        return null;
+      }
+    }
+
     let message = `HTTP ${resp.status}`;
     try {
       const err = await resp.json();
